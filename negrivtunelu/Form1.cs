@@ -16,6 +16,8 @@ namespace negrivtunelu
         Graphics mobjGrafika;
         Point? predchoziBod = null;
         bool Kresli = false;
+        Color mobjAktBarva;
+        
         
         public Form1()
         {
@@ -50,7 +52,7 @@ namespace negrivtunelu
                 {   
                     if (predchoziBod != null) 
                     {
-                        mobjGrafika.DrawLine(Pens.Black, (Point)predchoziBod, new Point(e.X, e.Y));
+                        mobjGrafika.DrawLine(new Pen(mobjAktBarva), (Point)predchoziBod, new Point(e.X, e.Y));
                     }
                    // ulozi aktualni coords do predchoziBod
                     predchoziBod = new Point(e.X, e.Y);
@@ -102,7 +104,18 @@ namespace negrivtunelu
             mobjGrafika = pbPlatno.CreateGraphics();
             
         }
-        
+
+        private void pnColorClick(object sender, EventArgs e)
+        {
+            Panel lobjPanel;
+            
+            lobjPanel = (Panel)sender;
+
+            if (lobjPanel != null) 
+            {
+                mobjAktBarva = lobjPanel.BackColor;
+            }
+        }
     }
 
 }
