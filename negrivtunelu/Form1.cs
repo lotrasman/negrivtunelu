@@ -24,6 +24,7 @@ namespace negrivtunelu
             InitializeComponent();
            //umoznuje mazani pomoci c
             this.KeyPreview = true;
+            mobjAktBarva = Color.Black;
             
         }
         /// <summary>
