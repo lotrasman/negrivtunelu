@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,10 @@ namespace negrivtunelu
         Graphics mobjGrafika;
         Point? predchoziBod = null;
         bool Kresli = false;
+        bool OpravduKresli = false;
         Color mobjAktBarva;
+        enum enTools { Pero , Box }
+        enTools mobjAktTool;
         
         
         public Form1()
@@ -25,6 +29,7 @@ namespace negrivtunelu
            //umoznuje mazani pomoci c
             this.KeyPreview = true;
             mobjAktBarva = Color.Black;
+            mobjAktTool = enTools.Pero;
             
         }
         /// <summary>
@@ -49,14 +54,31 @@ namespace negrivtunelu
                 //souradnice mysi do statusu
                 tsMysSouradnice.Text ="x:" + e.X.ToString() + "y:" + e.Y.ToString();
                 //kontrola jestli mousedown
-                if(Kresli== true ) 
-                {   
-                    if (predchoziBod != null) 
-                    {
-                        mobjGrafika.DrawLine(new Pen(mobjAktBarva), (Point)predchoziBod, new Point(e.X, e.Y));
-                    }
-                   // ulozi aktualni coords do predchoziBod
-                    predchoziBod = new Point(e.X, e.Y);
+                switch (mobjAktTool) 
+                {
+                    case enTools.Pero:
+                        if (OpravduKresli == true)
+                        {
+                            if (Kresli == true)
+                            {
+                                if (predchoziBod != null)
+                                {
+                                    mobjGrafika.DrawLine(new Pen(mobjAktBarva), (Point)predchoziBod, new Point(e.X, e.Y));
+                                }
+                                // ulozi aktualni coords do predchoziBod
+                                predchoziBod = new Point(e.X, e.Y);
+                            }
+                            
+                
+                
+                        }
+                        break;
+                    case enTools.Box://doplnit
+                        
+                        
+                        break;
+
+
                 }
             }
             catch(Exception ex) 
@@ -70,7 +92,7 @@ namespace negrivtunelu
         private void pbPlatno_MouseDown(object sender, MouseEventArgs e)
         {
         Kresli = true;
-        predchoziBod = new Point(e.X, e.Y);
+        //predchoziBod = new Point(e.X, e.Y);
         }
         //
         //zvednuti tlacitka mysi pri kresleni
@@ -78,6 +100,7 @@ namespace negrivtunelu
         private void pbPlatno_MouseUp(object sender, MouseEventArgs e)
         {
             Kresli= false;
+            predchoziBod = null;
         }
         //
         //rutina pro vymazani platna
@@ -116,6 +139,49 @@ namespace negrivtunelu
             {
                 mobjAktBarva = lobjPanel.BackColor;
             }
+        }
+
+        private void rbTool_CheckedChanges(object sender, EventArgs e)
+        {
+            try 
+            {
+                RadioButton lobjTool;
+
+                lobjTool = (RadioButton)sender;
+
+                switch (lobjTool.Text) 
+                {
+                    case "Pen":
+                        OpravduKresli = true;
+                        mobjAktTool = enTools.Pero;
+                        break;
+
+                    case "Box":
+                        OpravduKresli = false; 
+                        
+                        break;
+
+                }
+            }
+            catch(Exception ex) 
+            {
+                Kresli = true;
+                MessageBox.Show("ses mongoloid mongoloide");
+            }
+        }
+
+        private void tsmiKonec_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void tsmiUlozit_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+                pbPlatno.Image.Save("c:\\Temp\\obrazek.jpg", ImageFormat.Jpeg);
+            }
+            catch (Exception ex) { }
         }
     }
 
