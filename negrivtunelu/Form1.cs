@@ -74,7 +74,11 @@ namespace negrivtunelu
                         }
                         break;
                     case enTools.Box://doplnit
-                        
+                        if (mobjAktTool == enTools.Box) 
+                        {
+                            mobjGrafika.DrawRectangle(new Pen(mobjAktBarva), (Point)predchoziBod);
+                        }
+
                         
                         break;
 
@@ -157,8 +161,8 @@ namespace negrivtunelu
                         break;
 
                     case "Box":
-                        OpravduKresli = false; 
-                        
+                        OpravduKresli = false;
+                        mobjAktTool = enTools.Box;
                         break;
 
                 }
