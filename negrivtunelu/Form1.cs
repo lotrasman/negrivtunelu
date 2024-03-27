@@ -16,10 +16,11 @@ namespace negrivtunelu
         //kreslici objekt grafiky
         Graphics mobjGrafika;
         Point? predchoziBod = null;
+        Point? startpoint = null;
         bool Kresli = false;
         bool OpravduKresli = false;
         Color mobjAktBarva;
-        enum enTools { Pero , Box }
+        enum enTools { Pero , Box , Elipse }
         enTools mobjAktTool;
         
         
@@ -74,11 +75,6 @@ namespace negrivtunelu
                         }
                         break;
                     case enTools.Box://doplnit
-                        if (mobjAktTool == enTools.Box) 
-                        {
-                            mobjGrafika.DrawRectangle(new Pen(mobjAktBarva), (Point)predchoziBod);
-                        }
-
                         
                         break;
 
@@ -96,6 +92,7 @@ namespace negrivtunelu
         private void pbPlatno_MouseDown(object sender, MouseEventArgs e)
         {
         Kresli = true;
+        startpoint = new Point(e.X, e.Y);
         //predchoziBod = new Point(e.X, e.Y);
         }
         //
@@ -104,6 +101,26 @@ namespace negrivtunelu
         private void pbPlatno_MouseUp(object sender, MouseEventArgs e)
         {
             Kresli= false;
+            if (mobjAktTool == enTools.Box && startpoint.HasValue)
+            {
+                Point value = startpoint.Value;
+                int width = Math.Abs(e.X - value.X);
+                int height = Math.Abs(e.Y - value.Y);
+                int x = Math.Min(e.X, value.X);
+                int y = Math.Min(e.Y, value.Y);
+                mobjGrafika.DrawRectangle(new Pen(mobjAktBarva), x, y, width, height);
+                startpoint = null;
+            }
+            if (mobjAktTool == enTools.Elipse && startpoint.HasValue)
+            {
+                Point value = startpoint.Value;
+                int width = Math.Abs(e.X - value.X);
+                int height = Math.Abs(e.Y - value.Y);
+                int x = Math.Min(e.X, value.X);
+                int y = Math.Min(e.Y, value.Y);
+                mobjGrafika.DrawEllipse(new Pen(mobjAktBarva), x, y, width, height);
+                startpoint = null;
+            }
             predchoziBod = null;
         }
         //
@@ -163,6 +180,10 @@ namespace negrivtunelu
                     case "Box":
                         OpravduKresli = false;
                         mobjAktTool = enTools.Box;
+                        break;
+                    case "Elipse":
+                        OpravduKresli = false;
+                        mobjAktTool = enTools.Elipse;
                         break;
 
                 }
