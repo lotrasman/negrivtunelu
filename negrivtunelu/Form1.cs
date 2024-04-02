@@ -20,6 +20,7 @@ namespace negrivtunelu
         bool Kresli = false;
         bool OpravduKresli = false;
         Color mobjAktBarva;
+        Color mobjFillBarva;
         enum enTools { Pero , Box , Elipse }
         enTools mobjAktTool;
         
@@ -101,7 +102,7 @@ namespace negrivtunelu
         private void pbPlatno_MouseUp(object sender, MouseEventArgs e)
         {
             Kresli= false;
-            if (mobjAktTool == enTools.Box && startpoint.HasValue)
+            if (mobjAktTool == enTools.Box && startpoint.HasValue && pnFillBarva.BackColor == Color.White)
             {
                 Point value = startpoint.Value;
                 int width = Math.Abs(e.X - value.X);
@@ -110,8 +111,19 @@ namespace negrivtunelu
                 int y = Math.Min(e.Y, value.Y);
                 mobjGrafika.DrawRectangle(new Pen(mobjAktBarva), x, y, width, height);
                 startpoint = null;
+
             }
-            if (mobjAktTool == enTools.Elipse && startpoint.HasValue)
+            if (mobjAktTool == enTools.Box && startpoint.HasValue && pnFillBarva.BackColor != Color.White)
+            {
+                Point value = startpoint.Value;
+                int width = Math.Abs(e.X - value.X);
+                int height = Math.Abs(e.Y - value.Y);
+                int x = Math.Min(e.X, value.X);
+                int y = Math.Min(e.Y, value.Y);
+                mobjGrafika.FillRectangle(new SolidBrush(mobjFillBarva), x, y, width, height);
+                startpoint = null;
+            }
+            if (mobjAktTool == enTools.Elipse && startpoint.HasValue && pnFillBarva.BackColor == Color.White)
             {
                 Point value = startpoint.Value;
                 int width = Math.Abs(e.X - value.X);
@@ -121,7 +133,17 @@ namespace negrivtunelu
                 mobjGrafika.DrawEllipse(new Pen(mobjAktBarva), x, y, width, height);
                 startpoint = null;
             }
-            predchoziBod = null;
+            if (mobjAktTool == enTools.Elipse && startpoint.HasValue && pnFillBarva.BackColor != Color.White) 
+            {
+                Point value = startpoint.Value;
+                int width = Math.Abs(e.X - value.X);
+                int height = Math.Abs(e.Y - value.Y);
+                int x = Math.Min(e.X, value.X);
+                int y = Math.Min(e.Y, value.Y);
+                mobjGrafika.FillEllipse(new SolidBrush(mobjFillBarva), x, y, width, height);
+                startpoint = null;
+            }
+                predchoziBod = null;
         }
         //
         //rutina pro vymazani platna
@@ -150,15 +172,21 @@ namespace negrivtunelu
             
         }
 
-        private void pnColorClick(object sender, EventArgs e)
+        private void pnColorClick(object sender, MouseEventArgs e)
         {
             Panel lobjPanel;
             
             lobjPanel = (Panel)sender;
 
-            if (lobjPanel != null) 
+            if (lobjPanel != null && e.Button == MouseButtons.Left) 
             {
                 mobjAktBarva = lobjPanel.BackColor;
+                pnAktBarva.BackColor = lobjPanel.BackColor;
+            }
+            if (e.Button == MouseButtons.Right) 
+            {
+            mobjFillBarva = lobjPanel.BackColor;
+            pnFillBarva.BackColor = lobjPanel.BackColor;
             }
         }
 

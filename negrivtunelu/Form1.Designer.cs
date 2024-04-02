@@ -44,6 +44,7 @@
             this.pnWhite = new System.Windows.Forms.Panel();
             this.pnBlack = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbElipse = new System.Windows.Forms.RadioButton();
             this.rbBox = new System.Windows.Forms.RadioButton();
             this.rbPen = new System.Windows.Forms.RadioButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -51,7 +52,8 @@
             this.tsmiUlozit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOtevrit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiKonec = new System.Windows.Forms.ToolStripMenuItem();
-            this.rbElipse = new System.Windows.Forms.RadioButton();
+            this.pnAktBarva = new System.Windows.Forms.Panel();
+            this.pnFillBarva = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pbPlatno)).BeginInit();
             this.ssBottom.SuspendLayout();
             this.gbBarvy.SuspendLayout();
@@ -64,10 +66,9 @@
             this.pbPlatno.BackColor = System.Drawing.Color.White;
             this.pbPlatno.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pbPlatno.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pbPlatno.Location = new System.Drawing.Point(250, 219);
-            this.pbPlatno.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pbPlatno.Location = new System.Drawing.Point(125, 114);
             this.pbPlatno.Name = "pbPlatno";
-            this.pbPlatno.Size = new System.Drawing.Size(1316, 579);
+            this.pbPlatno.Size = new System.Drawing.Size(660, 303);
             this.pbPlatno.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPlatno.TabIndex = 0;
             this.pbPlatno.TabStop = false;
@@ -80,25 +81,24 @@
             this.ssBottom.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.ssBottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMysSouradnice});
-            this.ssBottom.Location = new System.Drawing.Point(0, 823);
+            this.ssBottom.Location = new System.Drawing.Point(0, 428);
             this.ssBottom.Name = "ssBottom";
-            this.ssBottom.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
-            this.ssBottom.Size = new System.Drawing.Size(1600, 42);
+            this.ssBottom.Size = new System.Drawing.Size(800, 22);
             this.ssBottom.TabIndex = 2;
             this.ssBottom.Text = "statusStrip1";
             // 
             // tsMysSouradnice
             // 
             this.tsMysSouradnice.Name = "tsMysSouradnice";
-            this.tsMysSouradnice.Size = new System.Drawing.Size(94, 32);
+            this.tsMysSouradnice.Size = new System.Drawing.Size(46, 17);
             this.tsMysSouradnice.Text = "x: 0 y: 0";
             // 
             // btSmazatPlatno
             // 
-            this.btSmazatPlatno.Location = new System.Drawing.Point(32, 97);
-            this.btSmazatPlatno.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSmazatPlatno.Location = new System.Drawing.Point(16, 50);
+            this.btSmazatPlatno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btSmazatPlatno.Name = "btSmazatPlatno";
-            this.btSmazatPlatno.Size = new System.Drawing.Size(54, 56);
+            this.btSmazatPlatno.Size = new System.Drawing.Size(27, 29);
             this.btSmazatPlatno.TabIndex = 3;
             this.btSmazatPlatno.Text = "C";
             this.btSmazatPlatno.UseVisualStyleBackColor = true;
@@ -106,6 +106,8 @@
             // 
             // gbBarvy
             // 
+            this.gbBarvy.Controls.Add(this.pnFillBarva);
+            this.gbBarvy.Controls.Add(this.pnAktBarva);
             this.gbBarvy.Controls.Add(this.panel6);
             this.gbBarvy.Controls.Add(this.panel5);
             this.gbBarvy.Controls.Add(this.panel4);
@@ -117,11 +119,11 @@
             this.gbBarvy.Controls.Add(this.pnWhite);
             this.gbBarvy.Controls.Add(this.pnBlack);
             this.gbBarvy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbBarvy.Location = new System.Drawing.Point(250, 80);
-            this.gbBarvy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbBarvy.Location = new System.Drawing.Point(125, 42);
+            this.gbBarvy.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gbBarvy.Name = "gbBarvy";
-            this.gbBarvy.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gbBarvy.Size = new System.Drawing.Size(1152, 129);
+            this.gbBarvy.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbBarvy.Size = new System.Drawing.Size(576, 67);
             this.gbBarvy.TabIndex = 4;
             this.gbBarvy.TabStop = false;
             this.gbBarvy.Text = "Barvy";
@@ -129,102 +131,102 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.Gray;
-            this.panel6.Location = new System.Drawing.Point(288, 62);
-            this.panel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel6.Location = new System.Drawing.Point(144, 32);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(40, 37);
+            this.panel6.Size = new System.Drawing.Size(20, 19);
             this.panel6.TabIndex = 3;
-            this.panel6.Click += new System.EventHandler(this.pnColorClick);
+            this.panel6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.DarkOrchid;
-            this.panel5.Location = new System.Drawing.Point(288, 17);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Location = new System.Drawing.Point(144, 9);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(40, 37);
+            this.panel5.Size = new System.Drawing.Size(20, 19);
             this.panel5.TabIndex = 3;
-            this.panel5.Click += new System.EventHandler(this.pnColorClick);
+            this.panel5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.MediumTurquoise;
-            this.panel4.Location = new System.Drawing.Point(240, 62);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel4.Location = new System.Drawing.Point(120, 32);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(40, 37);
+            this.panel4.Size = new System.Drawing.Size(20, 19);
             this.panel4.TabIndex = 3;
-            this.panel4.Click += new System.EventHandler(this.pnColorClick);
+            this.panel4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.MidnightBlue;
-            this.panel3.Location = new System.Drawing.Point(240, 17);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Location = new System.Drawing.Point(120, 9);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(40, 37);
+            this.panel3.Size = new System.Drawing.Size(20, 19);
             this.panel3.TabIndex = 3;
-            this.panel3.Click += new System.EventHandler(this.pnColorClick);
+            this.panel3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Chocolate;
-            this.panel2.Location = new System.Drawing.Point(192, 62);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Location = new System.Drawing.Point(96, 32);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(40, 37);
+            this.panel2.Size = new System.Drawing.Size(20, 19);
             this.panel2.TabIndex = 5;
-            this.panel2.Click += new System.EventHandler(this.pnColorClick);
+            this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Khaki;
-            this.panel1.Location = new System.Drawing.Point(192, 17);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Location = new System.Drawing.Point(96, 9);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(40, 37);
+            this.panel1.Size = new System.Drawing.Size(20, 19);
             this.panel1.TabIndex = 4;
-            this.panel1.Click += new System.EventHandler(this.pnColorClick);
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // pnBlue
             // 
             this.pnBlue.BackColor = System.Drawing.Color.Blue;
-            this.pnBlue.Location = new System.Drawing.Point(144, 62);
-            this.pnBlue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnBlue.Location = new System.Drawing.Point(72, 32);
+            this.pnBlue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnBlue.Name = "pnBlue";
-            this.pnBlue.Size = new System.Drawing.Size(40, 37);
+            this.pnBlue.Size = new System.Drawing.Size(20, 19);
             this.pnBlue.TabIndex = 3;
-            this.pnBlue.Click += new System.EventHandler(this.pnColorClick);
+            this.pnBlue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // pnRed
             // 
             this.pnRed.BackColor = System.Drawing.Color.Red;
-            this.pnRed.Location = new System.Drawing.Point(144, 17);
-            this.pnRed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnRed.Location = new System.Drawing.Point(72, 9);
+            this.pnRed.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnRed.Name = "pnRed";
-            this.pnRed.Size = new System.Drawing.Size(40, 37);
+            this.pnRed.Size = new System.Drawing.Size(20, 19);
             this.pnRed.TabIndex = 2;
-            this.pnRed.Click += new System.EventHandler(this.pnColorClick);
+            this.pnRed.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // pnWhite
             // 
             this.pnWhite.BackColor = System.Drawing.Color.White;
-            this.pnWhite.Location = new System.Drawing.Point(108, 62);
-            this.pnWhite.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnWhite.Location = new System.Drawing.Point(54, 32);
+            this.pnWhite.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnWhite.Name = "pnWhite";
-            this.pnWhite.Size = new System.Drawing.Size(40, 37);
+            this.pnWhite.Size = new System.Drawing.Size(20, 19);
             this.pnWhite.TabIndex = 1;
-            this.pnWhite.Click += new System.EventHandler(this.pnColorClick);
+            this.pnWhite.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // pnBlack
             // 
             this.pnBlack.BackColor = System.Drawing.Color.Black;
-            this.pnBlack.Location = new System.Drawing.Point(108, 17);
-            this.pnBlack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnBlack.Location = new System.Drawing.Point(54, 9);
+            this.pnBlack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnBlack.Name = "pnBlack";
-            this.pnBlack.Size = new System.Drawing.Size(40, 37);
+            this.pnBlack.Size = new System.Drawing.Size(20, 19);
             this.pnBlack.TabIndex = 0;
-            this.pnBlack.Click += new System.EventHandler(this.pnColorClick);
+            this.pnBlack.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnColorClick);
             // 
             // groupBox1
             // 
@@ -232,22 +234,30 @@
             this.groupBox1.Controls.Add(this.rbBox);
             this.groupBox1.Controls.Add(this.rbPen);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBox1.Location = new System.Drawing.Point(32, 219);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Location = new System.Drawing.Point(16, 114);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox1.Size = new System.Drawing.Size(206, 392);
+            this.groupBox1.Size = new System.Drawing.Size(103, 204);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nástroj";
             // 
+            // rbElipse
+            // 
+            this.rbElipse.AutoSize = true;
+            this.rbElipse.Location = new System.Drawing.Point(0, 64);
+            this.rbElipse.Name = "rbElipse";
+            this.rbElipse.Size = new System.Drawing.Size(59, 17);
+            this.rbElipse.TabIndex = 2;
+            this.rbElipse.Text = "Elipse";
+            this.rbElipse.UseVisualStyleBackColor = true;
+            this.rbElipse.CheckedChanged += new System.EventHandler(this.rbTool_CheckedChanges);
+            // 
             // rbBox
             // 
             this.rbBox.AutoSize = true;
-            this.rbBox.Location = new System.Drawing.Point(0, 81);
-            this.rbBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbBox.Location = new System.Drawing.Point(0, 42);
             this.rbBox.Name = "rbBox";
-            this.rbBox.Size = new System.Drawing.Size(84, 30);
+            this.rbBox.Size = new System.Drawing.Size(46, 17);
             this.rbBox.TabIndex = 1;
             this.rbBox.Text = "Box";
             this.rbBox.UseVisualStyleBackColor = true;
@@ -256,10 +266,9 @@
             // rbPen
             // 
             this.rbPen.AutoSize = true;
-            this.rbPen.Location = new System.Drawing.Point(0, 37);
-            this.rbPen.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbPen.Location = new System.Drawing.Point(0, 19);
             this.rbPen.Name = "rbPen";
-            this.rbPen.Size = new System.Drawing.Size(85, 30);
+            this.rbPen.Size = new System.Drawing.Size(47, 17);
             this.rbPen.TabIndex = 0;
             this.rbPen.Text = "Pen";
             this.rbPen.UseVisualStyleBackColor = true;
@@ -267,13 +276,13 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Soubor});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1600, 44);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -284,46 +293,52 @@
             this.tsmiOtevrit,
             this.tsmiKonec});
             this.Soubor.Name = "Soubor";
-            this.Soubor.Size = new System.Drawing.Size(111, 36);
+            this.Soubor.Size = new System.Drawing.Size(57, 22);
             this.Soubor.Text = "Soubor";
             // 
             // tsmiUlozit
             // 
             this.tsmiUlozit.Name = "tsmiUlozit";
-            this.tsmiUlozit.Size = new System.Drawing.Size(220, 44);
+            this.tsmiUlozit.Size = new System.Drawing.Size(110, 22);
             this.tsmiUlozit.Text = "Uložit";
             this.tsmiUlozit.Click += new System.EventHandler(this.tsmiUlozit_Click);
             // 
             // tsmiOtevrit
             // 
             this.tsmiOtevrit.Name = "tsmiOtevrit";
-            this.tsmiOtevrit.Size = new System.Drawing.Size(220, 44);
+            this.tsmiOtevrit.Size = new System.Drawing.Size(110, 22);
             this.tsmiOtevrit.Text = "Otevřít";
             // 
             // tsmiKonec
             // 
             this.tsmiKonec.Name = "tsmiKonec";
-            this.tsmiKonec.Size = new System.Drawing.Size(220, 44);
+            this.tsmiKonec.Size = new System.Drawing.Size(110, 22);
             this.tsmiKonec.Text = "Konec";
             this.tsmiKonec.Click += new System.EventHandler(this.tsmiKonec_Click);
             // 
-            // rbElipse
+            // pnAktBarva
             // 
-            this.rbElipse.AutoSize = true;
-            this.rbElipse.Location = new System.Drawing.Point(1, 123);
-            this.rbElipse.Margin = new System.Windows.Forms.Padding(6);
-            this.rbElipse.Name = "rbElipse";
-            this.rbElipse.Size = new System.Drawing.Size(109, 30);
-            this.rbElipse.TabIndex = 2;
-            this.rbElipse.Text = "Elipse";
-            this.rbElipse.UseVisualStyleBackColor = true;
-            this.rbElipse.CheckedChanged += new System.EventHandler(this.rbTool_CheckedChanges);
+            this.pnAktBarva.BackColor = System.Drawing.Color.White;
+            this.pnAktBarva.Location = new System.Drawing.Point(198, 8);
+            this.pnAktBarva.Margin = new System.Windows.Forms.Padding(2);
+            this.pnAktBarva.Name = "pnAktBarva";
+            this.pnAktBarva.Size = new System.Drawing.Size(38, 27);
+            this.pnAktBarva.TabIndex = 6;
+            // 
+            // pnFillBarva
+            // 
+            this.pnFillBarva.BackColor = System.Drawing.Color.White;
+            this.pnFillBarva.Location = new System.Drawing.Point(198, 36);
+            this.pnFillBarva.Margin = new System.Windows.Forms.Padding(2);
+            this.pnFillBarva.Name = "pnFillBarva";
+            this.pnFillBarva.Size = new System.Drawing.Size(38, 27);
+            this.pnFillBarva.TabIndex = 7;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1600, 865);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbBarvy);
             this.Controls.Add(this.btSmazatPlatno);
@@ -331,7 +346,6 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.pbPlatno);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Kreslení";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -376,6 +390,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiOtevrit;
         private System.Windows.Forms.ToolStripMenuItem tsmiKonec;
         private System.Windows.Forms.RadioButton rbElipse;
+        private System.Windows.Forms.Panel pnFillBarva;
+        private System.Windows.Forms.Panel pnAktBarva;
     }
 }
 
