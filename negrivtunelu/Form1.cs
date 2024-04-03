@@ -15,6 +15,9 @@ namespace negrivtunelu
     {
         //kreslici objekt grafiky
         Graphics mobjGrafika;
+        //kreslici objekt v pameti
+        Bitmap mobjBitmap;
+        Graphics mobjBMGraphics;
         Point? predchoziBod = null;
         Point? startpoint = null;
         bool Kresli = false;
@@ -33,6 +36,8 @@ namespace negrivtunelu
             mobjAktBarva = Color.Black;
             mobjAktTool = enTools.Pero;
             
+
+
         }
         /// <summary>
         /// nahrani okna do pameti
@@ -43,6 +48,10 @@ namespace negrivtunelu
         {
             //vytvoreni grafiky na pictureboxu
             mobjGrafika = pbPlatno.CreateGraphics();
+            //vytvoreni grafiky v ram
+            mobjBitmap = new Bitmap(pbPlatno.Width, pbPlatno.Height);
+            mobjBMGraphics = Graphics.FromImage(mobjBitmap);
+            mobjBMGraphics.Clear(Color.White);
         }
         /// <summary>
         /// pohyb mysi na picture boxem
@@ -65,7 +74,7 @@ namespace negrivtunelu
                             {
                                 if (predchoziBod != null)
                                 {
-                                    mobjGrafika.DrawLine(new Pen(mobjAktBarva), (Point)predchoziBod, new Point(e.X, e.Y));
+                                    mobjBMGraphics.DrawLine(new Pen(mobjAktBarva), (Point)predchoziBod, new Point(e.X, e.Y));
                                 }
                                 // ulozi aktualni coords do predchoziBod
                                 predchoziBod = new Point(e.X, e.Y);
@@ -81,6 +90,8 @@ namespace negrivtunelu
 
 
                 }
+                
+                pbPlatno.Image = mobjBitmap;
             }
             catch(Exception ex) 
             {
@@ -109,7 +120,7 @@ namespace negrivtunelu
                 int height = Math.Abs(e.Y - value.Y);
                 int x = Math.Min(e.X, value.X);
                 int y = Math.Min(e.Y, value.Y);
-                mobjGrafika.DrawRectangle(new Pen(mobjAktBarva), x, y, width, height);
+                mobjBMGraphics.DrawRectangle(new Pen(mobjAktBarva), x, y, width, height);
                 startpoint = null;
 
             }
@@ -120,7 +131,7 @@ namespace negrivtunelu
                 int height = Math.Abs(e.Y - value.Y);
                 int x = Math.Min(e.X, value.X);
                 int y = Math.Min(e.Y, value.Y);
-                mobjGrafika.FillRectangle(new SolidBrush(mobjFillBarva), x, y, width, height);
+                mobjBMGraphics.FillRectangle(new SolidBrush(mobjFillBarva), x, y, width, height);
                 startpoint = null;
             }
             if (mobjAktTool == enTools.Elipse && startpoint.HasValue && pnFillBarva.BackColor == Color.White)
@@ -130,7 +141,7 @@ namespace negrivtunelu
                 int height = Math.Abs(e.Y - value.Y);
                 int x = Math.Min(e.X, value.X);
                 int y = Math.Min(e.Y, value.Y);
-                mobjGrafika.DrawEllipse(new Pen(mobjAktBarva), x, y, width, height);
+                mobjBMGraphics.DrawEllipse(new Pen(mobjAktBarva), x, y, width, height);
                 startpoint = null;
             }
             if (mobjAktTool == enTools.Elipse && startpoint.HasValue && pnFillBarva.BackColor != Color.White) 
@@ -140,17 +151,19 @@ namespace negrivtunelu
                 int height = Math.Abs(e.Y - value.Y);
                 int x = Math.Min(e.X, value.X);
                 int y = Math.Min(e.Y, value.Y);
-                mobjGrafika.FillEllipse(new SolidBrush(mobjFillBarva), x, y, width, height);
+                mobjBMGraphics.FillEllipse(new SolidBrush(mobjFillBarva), x, y, width, height);
                 startpoint = null;
             }
-                predchoziBod = null;
+            pbPlatno.Image = mobjBitmap;
+            predchoziBod = null;
         }
         //
         //rutina pro vymazani platna
         //
         private void btSmazatPlatno_Click(object sender, EventArgs e)
         {
-            mobjGrafika.Clear(Color.White);
+            mobjBMGraphics.Clear(Color.White);
+            pbPlatno.Image = mobjBitmap;
         }
         // 
         //rutina pro mazani stisknutim c
@@ -167,9 +180,17 @@ namespace negrivtunelu
         //
         private void Form1_Resize(object sender, EventArgs e)
         {
-           
-            mobjGrafika = pbPlatno.CreateGraphics();
-            
+            Bitmap newBitmap = new Bitmap(pbPlatno.Width, pbPlatno.Height);
+            using (Graphics ResizedGraphics = Graphics.FromImage(newBitmap))
+            {
+                // Draw the old Bitmap onto the new one using mobjBMGraphics
+                ResizedGraphics.DrawImage(mobjBitmap, 0, 0, pbPlatno.Width, pbPlatno.Height);
+            }
+            // Replace the old Bitmap with the new one
+            mobjBitmap = newBitmap;
+            // Create a new Graphics object for the new Bitmap
+            mobjBMGraphics = Graphics.FromImage(mobjBitmap);
+
         }
 
         private void pnColorClick(object sender, MouseEventArgs e)
@@ -232,9 +253,22 @@ namespace negrivtunelu
         {
             try 
             {
-                pbPlatno.Image.Save("c:\\Temp\\obrazek.jpg", ImageFormat.Jpeg);
+                saveFileDialog.ShowDialog();
+                //mobjBitmap.Save("c:\\Temp\\obrazek.jpg", ImageFormat.Jpeg);
             }
             catch (Exception ex) { }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Bitmap a;
+            Graphics b;
+
+            a = new Bitmap(pbPlatno.Width, pbPlatno.Height);
+
+            b = Graphics.FromImage(a);
+            b.DrawLine(Pens.Aquamarine, 0, 0, 100, 100);
+            mobjGrafika.DrawImage(a, 0, 0);
         }
     }
 
