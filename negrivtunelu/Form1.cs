@@ -24,18 +24,24 @@ namespace negrivtunelu
         bool OpravduKresli = false;
         Color mobjAktBarva;
         Color mobjFillBarva;
-        enum enTools { Pero , Box , Elipse }
+        enum enTools { Pero, Box, Elipse, Line }
         enTools mobjAktTool;
-        
-        
+        bool isDrawing = false;
+
+
         public Form1()
         {
             InitializeComponent();
-           //umoznuje mazani pomoci c
+            //ktery files jsou mozny otevrit a ulozit
+            saveFileDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png";
+
+            openFileDialog1.Filter = "JPEG Image|*.jpg|PNG Image|*.png";
+
+            //umoznuje mazani pomoci c
             this.KeyPreview = true;
             mobjAktBarva = Color.Black;
-            mobjAktTool = enTools.Pero;
-            
+
+
 
 
         }
@@ -60,12 +66,12 @@ namespace negrivtunelu
         /// <param name="e"></param>
         private void pbPlatno_MouseMove(object sender, MouseEventArgs e)
         {
-            try 
+            try
             {
                 //souradnice mysi do statusu
-                tsMysSouradnice.Text ="x:" + e.X.ToString() + "y:" + e.Y.ToString();
+                tsMysSouradnice.Text = "x:" + e.X.ToString() + "y:" + e.Y.ToString();
                 //kontrola jestli mousedown
-                switch (mobjAktTool) 
+                switch (mobjAktTool)
                 {
                     case enTools.Pero:
                         if (OpravduKresli == true)
@@ -79,23 +85,22 @@ namespace negrivtunelu
                                 // ulozi aktualni coords do predchoziBod
                                 predchoziBod = new Point(e.X, e.Y);
                             }
-                            
-                
-                
+
+
+
                         }
                         break;
-                    case enTools.Box://doplnit
-                        
-                        break;
+
+
 
 
                 }
-                
+
                 pbPlatno.Image = mobjBitmap;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-            
+
             }
         }
         //
@@ -103,16 +108,18 @@ namespace negrivtunelu
         //
         private void pbPlatno_MouseDown(object sender, MouseEventArgs e)
         {
-        Kresli = true;
-        startpoint = new Point(e.X, e.Y);
-        //predchoziBod = new Point(e.X, e.Y);
+            Kresli = true;
+            startpoint = new Point(e.X, e.Y);
+            isDrawing = true;
+            //predchoziBod = new Point(e.X, e.Y);
+
         }
         //
-        //zvednuti tlacitka mysi pri kresleni
+        //zvednuti tlacitka mysi pri kresleni (cela kreslici operace pro box a elipse)
         //
         private void pbPlatno_MouseUp(object sender, MouseEventArgs e)
         {
-            Kresli= false;
+            Kresli = false;
             if (mobjAktTool == enTools.Box && startpoint.HasValue && pnFillBarva.BackColor == Color.White)
             {
                 Point value = startpoint.Value;
@@ -144,7 +151,7 @@ namespace negrivtunelu
                 mobjBMGraphics.DrawEllipse(new Pen(mobjAktBarva), x, y, width, height);
                 startpoint = null;
             }
-            if (mobjAktTool == enTools.Elipse && startpoint.HasValue && pnFillBarva.BackColor != Color.White) 
+            if (mobjAktTool == enTools.Elipse && startpoint.HasValue && pnFillBarva.BackColor != Color.White)
             {
                 Point value = startpoint.Value;
                 int width = Math.Abs(e.X - value.X);
@@ -152,6 +159,12 @@ namespace negrivtunelu
                 int x = Math.Min(e.X, value.X);
                 int y = Math.Min(e.Y, value.Y);
                 mobjBMGraphics.FillEllipse(new SolidBrush(mobjFillBarva), x, y, width, height);
+                startpoint = null;
+            }
+            if (mobjAktTool == enTools.Line && startpoint.HasValue)
+            {
+                Point value = startpoint.Value;
+                mobjBMGraphics.DrawLine(new Pen(mobjAktBarva), value, new Point(e.X, e.Y));
                 startpoint = null;
             }
             pbPlatno.Image = mobjBitmap;
@@ -170,9 +183,9 @@ namespace negrivtunelu
         //
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.C) 
+            if (e.KeyCode == Keys.C)
             {
-            btSmazatPlatno_Click(sender, e);
+                btSmazatPlatno_Click(sender, e);
             }
         }
         // 
@@ -196,30 +209,30 @@ namespace negrivtunelu
         private void pnColorClick(object sender, MouseEventArgs e)
         {
             Panel lobjPanel;
-            
+
             lobjPanel = (Panel)sender;
 
-            if (lobjPanel != null && e.Button == MouseButtons.Left) 
+            if (lobjPanel != null && e.Button == MouseButtons.Left)
             {
                 mobjAktBarva = lobjPanel.BackColor;
                 pnAktBarva.BackColor = lobjPanel.BackColor;
             }
-            if (e.Button == MouseButtons.Right) 
+            if (e.Button == MouseButtons.Right)
             {
-            mobjFillBarva = lobjPanel.BackColor;
-            pnFillBarva.BackColor = lobjPanel.BackColor;
+                mobjFillBarva = lobjPanel.BackColor;
+                pnFillBarva.BackColor = lobjPanel.BackColor;
             }
         }
 
         private void rbTool_CheckedChanges(object sender, EventArgs e)
         {
-            try 
+            try
             {
                 RadioButton lobjTool;
 
                 lobjTool = (RadioButton)sender;
 
-                switch (lobjTool.Text) 
+                switch (lobjTool.Text)
                 {
                     case "Pen":
                         OpravduKresli = true;
@@ -234,10 +247,14 @@ namespace negrivtunelu
                         OpravduKresli = false;
                         mobjAktTool = enTools.Elipse;
                         break;
+                    case "Line":
+                        OpravduKresli = false;
+                        mobjAktTool = enTools.Line;
+                        break;
 
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Kresli = true;
                 MessageBox.Show("ses mongoloid mongoloide");
@@ -251,24 +268,44 @@ namespace negrivtunelu
 
         private void tsmiUlozit_Click(object sender, EventArgs e)
         {
-            try 
+            try
             {
-                saveFileDialog.ShowDialog();
-                //mobjBitmap.Save("c:\\Temp\\obrazek.jpg", ImageFormat.Jpeg);
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedFilter = saveFileDialog.FilterIndex.ToString();
+                    switch (selectedFilter)
+                    {
+                        case "1": // JPEG
+                            mobjBitmap.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+                            break;
+                        case "2": // PNG
+                            mobjBitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+                            break;
+
+                    }
+                }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ses mongoloid");
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void tsmiOtevrit_Click(object sender, EventArgs e)
         {
-            Bitmap a;
-            Graphics b;
-
-            a = new Bitmap(pbPlatno.Width, pbPlatno.Height);
-
-            b = Graphics.FromImage(a);
-            b.DrawLine(Pens.Aquamarine, 0, 0, 100, 100);
-            mobjGrafika.DrawImage(a, 0, 0);
+            try
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    mobjBitmap = new Bitmap(openFileDialog1.FileName);
+                    mobjBMGraphics = Graphics.FromImage(mobjBitmap);
+                    pbPlatno.Image = mobjBitmap;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ses mongoloid");
+            }
         }
     }
 

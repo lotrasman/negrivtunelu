@@ -46,6 +46,7 @@
             this.pnWhite = new System.Windows.Forms.Panel();
             this.pnBlack = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Line = new System.Windows.Forms.RadioButton();
             this.rbElipse = new System.Windows.Forms.RadioButton();
             this.rbBox = new System.Windows.Forms.RadioButton();
             this.rbPen = new System.Windows.Forms.RadioButton();
@@ -256,21 +257,33 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Line);
             this.groupBox1.Controls.Add(this.rbElipse);
             this.groupBox1.Controls.Add(this.rbBox);
             this.groupBox1.Controls.Add(this.rbPen);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.groupBox1.Location = new System.Drawing.Point(671, 0);
+            this.groupBox1.Location = new System.Drawing.Point(671, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(81, 83);
+            this.groupBox1.Size = new System.Drawing.Size(125, 78);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nástroj";
             // 
+            // Line
+            // 
+            this.Line.AutoSize = true;
+            this.Line.Location = new System.Drawing.Point(66, 19);
+            this.Line.Name = "Line";
+            this.Line.Size = new System.Drawing.Size(49, 17);
+            this.Line.TabIndex = 10;
+            this.Line.Text = "Line";
+            this.Line.UseVisualStyleBackColor = true;
+            this.Line.CheckedChanged += new System.EventHandler(this.rbTool_CheckedChanges);
+            // 
             // rbElipse
             // 
             this.rbElipse.AutoSize = true;
-            this.rbElipse.Location = new System.Drawing.Point(0, 64);
+            this.rbElipse.Location = new System.Drawing.Point(0, 55);
             this.rbElipse.Name = "rbElipse";
             this.rbElipse.Size = new System.Drawing.Size(59, 17);
             this.rbElipse.TabIndex = 2;
@@ -281,7 +294,7 @@
             // rbBox
             // 
             this.rbBox.AutoSize = true;
-            this.rbBox.Location = new System.Drawing.Point(0, 42);
+            this.rbBox.Location = new System.Drawing.Point(0, 35);
             this.rbBox.Name = "rbBox";
             this.rbBox.Size = new System.Drawing.Size(46, 17);
             this.rbBox.TabIndex = 1;
@@ -334,6 +347,7 @@
             this.tsmiOtevrit.Name = "tsmiOtevrit";
             this.tsmiOtevrit.Size = new System.Drawing.Size(180, 22);
             this.tsmiOtevrit.Text = "Otevřít";
+            this.tsmiOtevrit.Click += new System.EventHandler(this.tsmiOtevrit_Click);
             // 
             // tsmiKonec
             // 
@@ -360,7 +374,7 @@
             this.panelNastroje.Controls.Add(this.gbBarvy);
             this.panelNastroje.Location = new System.Drawing.Point(0, 27);
             this.panelNastroje.Name = "panelNastroje";
-            this.panelNastroje.Size = new System.Drawing.Size(757, 82);
+            this.panelNastroje.Size = new System.Drawing.Size(822, 90);
             this.panelNastroje.TabIndex = 9;
             // 
             // openFileDialog1
@@ -429,6 +443,7 @@
         private System.Windows.Forms.Panel panelNastroje;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.RadioButton Line;
     }
 }
 
